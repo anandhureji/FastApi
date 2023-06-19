@@ -46,6 +46,15 @@ async def read_todo(db:db_dependency,todo_id: int = Path(gt=0)):
         return todo_model
     raise HTTPException(status_code=404, detail='Todo not found.')
 
+@app.post("/todo",status_code=status.HTTP_201_CREATED)
+async def create_todo(db:db_dependency,todo_request:TodoRequest):
+    todo_model = Todos(**todo_request.dict())
+    db.add(todo_model)
+    db.commit()
+
+
+
+
 
 
 
